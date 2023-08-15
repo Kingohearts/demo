@@ -1,5 +1,8 @@
 package com.apis.demo.web;
 
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +27,15 @@ public class StudentController {
     StudentService studentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
-        return new ResponseEntity<>(studentService.getStudent(id), HttpStatus.OK);
+    public ResponseEntity<?> getStudentInfo(@PathVariable Long id) {
+        // return new ResponseEntity<>(studentService.getStudent(id), HttpStatus.OK);
+        Optional<Student> studentOptional = studentService.getStudent(id);
+    
+    if (studentOptional.isPresent()) {
+        return new ResponseEntity<>(studentOptional.get(), HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
+    }
     }
 
     @PostMapping

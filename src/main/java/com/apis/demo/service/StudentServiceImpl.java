@@ -18,9 +18,10 @@ public class StudentServiceImpl implements StudentService {
     StudentRepository studentRepository;
 
     @Override
-    public Student getStudent(Long id) {
-        Optional<Student> student = studentRepository.findById(id);
-        return unwrapStudent(student, id);
+    public Optional<Student> getStudent(Long id) {
+        return studentRepository.findById(id);
+        //return unwrapStudent(student, id);
+          
     };
 
     @Override
